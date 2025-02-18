@@ -1,0 +1,141 @@
+/* Deal item enhancements */
+.deal-item {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+}
+
+.deal-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.deal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.deal-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    flex: 1;
+    margin-right: 12px;
+}
+
+.deal-price {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 14px;
+    display: block;
+}
+
+.final-price {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2e7d32;
+    display: block;
+}
+
+.deal-savings {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0;
+}
+
+.savings-badge {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.savings-badge.high-savings {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.savings-badge.medium-savings {
+    background: #fff3e0;
+    color: #ef6c00;
+}
+
+.savings-badge.normal-savings {
+    background: #f5f5f5;
+    color: #616161;
+}
+
+.coupon-code {
+    font-family: monospace;
+    background: #f0f7ff;
+    color: #0066cc;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.deal-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.apply-deal-btn {
+    flex: 1;
+    padding: 8px 16px;
+    background: #ff9900;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.apply-deal-btn:hover {
+    background: #ff8800;
+}
+
+.view-deal-btn {
+    flex: 1;
+    padding: 8px 16px;
+    background: #4CAF50;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    text-align: center;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+.view-deal-btn:hover {
+    background: #43A047;
+}
+
+/* Loading animation */
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #666;
+    animation: pulse 1.5s infinite;
+}

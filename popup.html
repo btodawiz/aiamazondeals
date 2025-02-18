@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            width: 380px;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #1C1B24;
+            color: #FFF;
+            margin: 0;
+        }
+
+        .container {
+            background: #1C1B24;
+            padding: 20px;
+        }
+
+        .logo {
+            width: 380px;
+            height: 240px;
+            margin: -20px -20px 20px -20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #262631;
+            overflow: hidden;
+            position: relative;
+            animation: float 6s ease-in-out infinite, pulse 3s ease-in-out infinite;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #3B3A47;
+            border-radius: 12px;
+            font-size: 16px;
+            background: #262631;
+            color: #FFF;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"]:focus {
+            background: #2F2E3D;
+            border-color: #674CFF;
+            box-shadow: 0 0 0 2px rgba(103, 76, 255, 0.2);
+            outline: none;
+        }
+
+        #keywords {
+            background: #2A2640;
+            border-color: #4C4B63;
+            font-size: 18px;
+            padding: 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #keywords:focus {
+            background: #312E4A;
+            border-color: #8B5CF6;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25), 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #keywords::placeholder {
+            color: #9897A9;
+            font-size: 16px;
+        }
+
+        select {
+            appearance: none;
+            background-image: url('data:image/svg+xml;charset=US-ASCII,<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z" fill="%23FFF"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            padding-right: 30px;
+        }
+
+        .ai-buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+            margin: 20px 0;
+        }
+
+        .ai-button {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            border: 1px solid #3B3A47;
+            border-radius: 12px;
+            background: #262631;
+            color: #FFF;
+            cursor: pointer;
+            font-size: 14px;
+            text-align: left;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .ai-button:hover {
+            background: #2F2E3D;
+            border-color: #674CFF;
+            transform: translateY(-2px);
+            animation: pulse 2s infinite;
+        }
+
+        .ai-button .icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #FFD966;
+        }
+
+        .ai-button:hover .icon {
+            transform: scale(1.1);
+            color: #FFF;
+        }
+
+        .ai-button .button-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ai-button .button-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .ai-button .button-description {
+            font-size: 12px;
+            color: #9897A9;
+        }
+
+        .price-range {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin: 20px 0;
+            background: #262631;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #3B3A47;
+        }
+
+        .price-range input[type="number"] {
+            width: 45%;
+            padding: 8px 12px;
+            border: 1px solid #3B3A47;
+            border-radius: 10px;
+            background: #1C1B24;
+            color: #FFF;
+            font-size: 14px;
+        }
+
+        .price-range span {
+            color: #9897A9;
+        }
+
+        .search-button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            background: #8B5CF6;
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .search-button:hover {
+            background: #7C3AED;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        .search-button:active {
+            transform: translateY(0);
+        }
+
+        .search-button .icon {
+            font-size: 20px;
+        }
+
+        .search-button:disabled {
+            background: #4B5563;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .loading-spinner {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: #FFF;
+        }
+
+        .deal-card {
+            background: #2A2935;
+            border: 1px solid #3B3A47;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .deal-card h3 {
+            margin: 0 0 10px 0;
+            color: #FFD966;
+            font-size: 16px;
+        }
+
+        .price-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .current-price {
+            color: #4CAF50;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .original-price {
+            color: #999;
+            text-decoration: line-through;
+            font-size: 14px;
+        }
+
+        .savings {
+            color: #FFD966;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .rating {
+            color: #FFD966;
+            margin: 5px 0;
+        }
+
+        .description {
+            color: #CCC;
+            font-size: 14px;
+            margin: 10px 0 0 0;
+            line-height: 1.4;
+        }
+
+        .loading-state {
+            text-align: center;
+            padding: 20px;
+            color: #FFD966;
+        }
+
+        .error-message {
+            background: #442222;
+            border: 1px solid #662222;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            color: #FF6666;
+        }
+
+        .results-container {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            margin-top: 20px;
+        }
+
+        .deal-type-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            width: 100%;
+            background: #262631;
+            border: 1px solid #3B3A47;
+            border-radius: 12px;
+            color: #FFF;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 8px;
+        }
+
+        .deal-type-button:hover {
+            background: #2F2E3D;
+            border-color: #674CFF;
+        }
+
+        .deal-type-button.active {
+            background: #674CFF;
+            border-color: #8B5CF6;
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+        }
+
+        .deal-type-button .icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+        }
+
+        .deal-type-button .text {
+            flex: 1;
+            text-align: left;
+        }
+
+        .deal-type-button .text h3 {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .deal-type-button .text p {
+            margin: 2px 0 0 0;
+            font-size: 12px;
+            color: #9897A9;
+        }
+
+        .deal-type-button.active .text p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { 
+                box-shadow: 0 0 0 0 rgba(255, 217, 102, 0.4),
+                           0 0 0 0 rgba(103, 76, 255, 0.4);
+            }
+            70% { 
+                box-shadow: 0 0 20px 10px rgba(255, 217, 102, 0),
+                           0 0 10px 15px rgba(103, 76, 255, 0);
+            }
+            100% { 
+                box-shadow: 0 0 0 0 rgba(255, 217, 102, 0),
+                           0 0 0 0 rgba(103, 76, 255, 0);
+            }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+
+        ::placeholder {
+            color: #9897A9;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1C1B24;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3B3A47;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4A495A;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="icons/download.png" alt="BEWIZ LABS">
+        </div>
+
+        <div class="search-container">
+            <input type="text" id="keywords" placeholder="What are you looking for?">
+            
+            <select id="categorySelect">
+                <option value="all">All Categories</option>
+                <option value="electronics">Electronics</option>
+                <option value="home">Home & Kitchen</option>
+                <option value="fashion">Fashion</option>
+                <option value="beauty">Beauty & Personal Care</option>
+                <option value="toys">Toys & Games</option>
+            </select>
+
+            <div class="price-range">
+                <input type="number" id="minPrice" placeholder="Min $" min="0">
+                <input type="number" id="maxPrice" placeholder="Max $" min="0">
+            </div>
+
+            <div class="ai-buttons">
+                <button id="bestValueBtn" class="ai-button" data-type="best-value">
+                    <div class="icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="button-content">
+                        <div class="button-title">Best Value Deals</div>
+                        <div class="button-description">Top-rated products with great discounts</div>
+                    </div>
+                </button>
+                <button id="lowestPriceBtn" class="ai-button" data-type="lowest-price">
+                    <div class="icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="button-content">
+                        <div class="button-title">Lowest Prices</div>
+                        <div class="button-description">Find the absolute cheapest options</div>
+                    </div>
+                </button>
+                <button id="trendingDealsBtn" class="ai-button" data-type="trending">
+                    <div class="icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="button-content">
+                        <div class="button-title">Trending Deals</div>
+                        <div class="button-description">Popular items with current discounts</div>
+                    </div>
+                </button>
+            </div>
+
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+        </div>
+
+        <div id="dealResults" class="results-container">
+            <!-- Results will be displayed here -->
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>

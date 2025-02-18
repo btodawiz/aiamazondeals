@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - Amazon Discount Finder</title>
+    <style>
+        :root {
+            --primary-color: #8A2BE2;
+            --secondary-color: #4169E1;
+            --accent-color: #FF9900;
+            --amazon-dark: #232F3E;
+            --bg-dark: #131921;
+            --bg-light: #232F3E;
+            --glow-color: rgba(138, 43, 226, 0.5);
+            --amazon-glow: rgba(255, 153, 0, 0.5);
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--bg-dark), var(--bg-light));
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            min-width: 800px;
+            min-height: 600px;
+        }
+
+        .logo {
+            display: block;
+            width: 200px;
+            height: auto;
+            margin: 0 auto 20px;
+        }
+
+        .logo img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .results-container {
+            background: rgba(35, 47, 62, 0.8);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .result-item {
+            background: rgba(255, 153, 0, 0.1);
+            border-left: 3px solid var(--accent-color);
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
+        .result-item h3 {
+            color: var(--accent-color);
+            margin: 0 0 10px 0;
+        }
+
+        .result-item .price {
+            font-size: 1.2em;
+            color: #00ff00;
+            margin: 10px 0;
+        }
+
+        .result-item .discount {
+            color: #ff4444;
+            font-weight: bold;
+        }
+
+        .view-on-amazon {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent-color), #e47911);
+            color: var(--amazon-dark);
+            padding: 8px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .view-on-amazon:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px var(--amazon-glow);
+        }
+
+        .loading {
+            text-align: center;
+            color: var(--accent-color);
+            font-size: 1.2em;
+            padding: 40px;
+        }
+
+        .loading:after {
+            content: '...';
+            animation: dots 1.5s steps(5, end) infinite;
+        }
+
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="icons/128.png" alt="Amazon Discount Finder">
+    </div>
+    <div class="results-container">
+        <div class="loading">Searching for the best deals</div>
+    </div>
+    <script>
+        // Get search parameters from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const keywords = urlParams.get('keywords');
+        const category = urlParams.get('category');
+        const country = urlParams.get('country');
+        const minPrice = urlParams.get('minPrice');
+        const maxPrice = urlParams.get('maxPrice');
+        const discount = urlParams.get('discount');
+
+        // Construct Amazon URL
+        function getAmazonUrl() {
+            let url = `https://www.amazon.${country}/s?k=${encodeURIComponent(keywords)}`;
+            if (category) url += `&i=${category}`;
+            if (minPrice) url += `&low-price=${minPrice}`;
+            if (maxPrice) url += `&high-price=${maxPrice}`;
+            url += '&tag=bwizcom-20';
+            return url;
+        }
+
+        // After 2 seconds, redirect to Amazon
+        setTimeout(() => {
+            window.location.href = getAmazonUrl();
+        }, 2000);
+    </script>
+</body>
+</html>
